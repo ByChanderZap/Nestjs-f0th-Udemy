@@ -11,7 +11,7 @@ import {
 import { CreateTaskDto } from './dtos/dto/create-task-dto';
 import { GetTasksFilterDto } from './dtos/dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dtos/dto/update-task-status.dto';
-import { Task, TaskStatus } from './models/task.model';
+import { Task, TaskStatus } from './models/task-status.enum';
 
 import { TasksService } from './tasks.service';
 
@@ -19,6 +19,7 @@ import { TasksService } from './tasks.service';
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
+  /*
   @Get()
   getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
     // If we have any filters defined, call taskService.getTasksWithFilters
@@ -59,4 +60,5 @@ export class TasksController {
     const { status } = updateTaskStatusDto;
     return this.taskService.updateTaskStatus(id, status);
   }
+  */
 }
