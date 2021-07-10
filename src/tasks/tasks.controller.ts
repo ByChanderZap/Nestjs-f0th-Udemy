@@ -11,7 +11,8 @@ import {
 import { CreateTaskDto } from './dtos/dto/create-task-dto';
 import { GetTasksFilterDto } from './dtos/dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dtos/dto/update-task-status.dto';
-import { Task, TaskStatus } from './models/task-status.enum';
+import { TaskStatus } from './models/task-status.enum';
+import { Task } from './task.entity';
 
 import { TasksService } from './tasks.service';
 
@@ -31,27 +32,23 @@ export class TasksController {
       return this.taskService.getAllTasks();
     }
   }
-
+  */
   @Get('/:id')
-  getTaskById(@Param('id') id: string): Task {
-    const task = this.taskService.getOneTask(id);
+  getTaskById(@Param('id') id: string): Promise<Task> {
+    const task = this.taskService.getTaskById(id);
     return task;
   }
 
   @Delete('/:id')
-  deleteOneTask(@Param('id') id: string): any {
-    this.taskService.deleteTask(id);
-    return {
-      Message: `Task ${id} deleted`,
-    };
+  deleteOneTask(@Param('id') id: string): Promise<void> {
+    return this.taskService.deleteTask(id);
   }
 
   @Post()
-  createTask(@Body() createTaskDt: CreateTaskDto): Task {
-    const created: Task = this.taskService.createTask(createTaskDt);
-    return created;
+  createTask(@Body() createTaskDt: CreateTaskDto): Promise<Task> {
+    return this.taskService.createTask(createTaskDt);
   }
-
+  /*
   @Patch('/:id/status')
   udateTaskStatus(
     @Param('id') id: string,
