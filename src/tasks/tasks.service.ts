@@ -12,31 +12,10 @@ export class TasksService {
     @InjectRepository(TaskRepository)
     private taskRepository: TaskRepository,
   ) {}
-  /*
-  getAllTasks(): Task[] {
-    return this.tasks;
-  }
 
-  getTasksWithFilters(filterDto: GetTasksFilterDto): Task[] {
-    const { status, search } = filterDto;
-    let tasks = this.getAllTasks();
-    // Do something with status
-    if (status) {
-      tasks = tasks.filter((task) => task.status === status);
-    }
-    // Do something with search
-    if (search) {
-      tasks = tasks.filter((task) => {
-        if (task.title.includes(search) || task.description.includes(search)) {
-          return true;
-        }
-        return false;
-      });
-    }
-    // return everything
-    return tasks;
+  getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.taskRepository.getTasks(filterDto);
   }
-  */
 
   async getTaskById(id: string): Promise<Task> {
     const found = await this.taskRepository.findOne(id);
@@ -58,12 +37,11 @@ export class TasksService {
   createTask(createTaskDto: CreateTaskDto): Promise<Task> {
     return this.taskRepository.createTask(createTaskDto);
   }
-  /*
 
-  updateTaskStatus(id: string, status: TaskStatus) {
-    const task = this.getOneTask(id);
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
     task.status = status;
+    await this.taskRepository.save(task);
     return task;
   }
-  */
 }
